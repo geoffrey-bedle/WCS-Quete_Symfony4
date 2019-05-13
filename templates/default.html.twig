@@ -1,4 +1,7 @@
 {% extends 'base.html.twig' %}
 {% block content %}
     <h1>Bienvenue sur mon blog</h1>
+    <a href="{{ path('blog_index') }}">
+        Testing index() method from BlogController to view all articles.
+    </a>
 {% endblock %}
