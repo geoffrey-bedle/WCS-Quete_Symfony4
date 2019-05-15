@@ -11,7 +11,7 @@ class Article
 {
     /**
      * @ORM\Id()
-     * @ORM\GeneratedValue()
+     * @ORM\GeneratedValue()y
      * @ORM\Column(type="integer")
      */
     private $id;

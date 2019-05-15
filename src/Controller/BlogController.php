@@ -72,38 +72,35 @@ class BlogController extends AbstractController
                 'No article with ' . $slug . ' title, found in article\'s table.'
             );
         }
-
+        $category = $article->getCategory();
         return $this->render(
             'blog/show.html.twig',
             [
                 'article' => $article,
                 'slug' => $slug,
+                'category' => $category
             ]
         );
     }
 
     /**
+     *
+     * @return Response
      * @Route("/category/{categoryName}", name="show_category")
      */
     public function showByCategory(string $categoryName)
     {
-
-
-
-
-
-
-
-
         $category = $this->getDoctrine()->getRepository(Category::class)->findOneByName([$categoryName]);
-        var_dump($category);
-        $categoryArticles = $this->getDoctrine()->getRepository(Article::class)->findByCategory([$category
-            ],['id'=>'DESC'],3);         //methode _call dans entityRepository
+        //$category = $this->getDoctrine()->getRepository(Category::class)->findOneBy(['name'=>$categoryName]);
+        $articles = $category->getArticles();
 
+
+        /* $categoryArticles = $this->getDoctrine()->getRepository(Article::class)->findByCategory([$category
+             ],['id'=>'DESC'],3);         //methode _call dans entityRepository
+ */
         return $this->render(
-            'blog/category.html.twig', ['categoryArticles' => $categoryArticles]
+            'blog/category.html.twig', ['categoryArticles' => $articles]
         );
     }
-
 }
 

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -57,10 +58,7 @@ class Category
         return $this->articles;
     }
 
-    /**
-     * param Article $article
-     * @return Category
-     */
+
     public function addArticle(Article $article): self
     {
         if (!$this->articles->contains($article)) {
@@ -72,10 +70,7 @@ class Category
     }
 
 
-    /**
-     * @param Article $article
-     * @return Category
-     */
+
     public function removeArticle(Article $article): self
     {
         if ($this->articles->contains($article)) {
