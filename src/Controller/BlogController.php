@@ -28,6 +28,7 @@ class BlogController extends AbstractController
         if (!$articles) {
             throw  $this->createNotFoundException('No article found in article\'s table.');
         }
+
         return $this->render('blog/index.html.twig', ['articles' => $articles]);
     }
 
@@ -86,9 +87,18 @@ class BlogController extends AbstractController
      */
     public function showByCategory(string $categoryName)
     {
-        $category = $this->getDoctrine()->getRepository(Category::class)->findOneBy(['name' => $categoryName]);
-        $categoryArticles = $this->getDoctrine()->getRepository(Article::class)->findBy(['category'=>$category
-            ],['id'=>'DESC'],3);
+
+
+
+
+
+
+
+
+        $category = $this->getDoctrine()->getRepository(Category::class)->findOneByName([$categoryName]);
+        var_dump($category);
+        $categoryArticles = $this->getDoctrine()->getRepository(Article::class)->findByCategory([$category
+            ],['id'=>'DESC'],3);         //methode _call dans entityRepository
 
         return $this->render(
             'blog/category.html.twig', ['categoryArticles' => $categoryArticles]
