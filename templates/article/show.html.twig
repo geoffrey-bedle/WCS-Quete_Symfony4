@@ -19,6 +19,14 @@
                 <th>Title</th>
                 <td>{{ article.title }}</td>
             </tr>
+            <tr>
+                <th>Tags</th>
+                <td>
+                    {% for tag in article.tags %}
+                        {{ tag.name }}
+                    {% endfor %}
+                </td>
+            </tr>
         </tbody>
     </table>
 

@@ -1,12 +1,12 @@
 <?php
 
-
 namespace App\Controller;
 
-
+use App\Entity\Tag;
 use App\Form\ArticleSearchType;
 use App\Form\CategoryType;
 use App\Repository\ArticleRepository;
+use App\Repository\CategoryRepository;
 use Doctrine\ORM\Mapping\OrderBy;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,6 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use App\Entity\Article;
 use App\Entity\Category;
+
 
 /**
  * Class BlogController
@@ -40,7 +41,6 @@ class BlogController extends AbstractController
         );
 
 
-
         $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
         $articles = $this->getDoctrine()->getRepository(Article::class)->findAll();
         if (!$articles) {
@@ -59,7 +59,7 @@ class BlogController extends AbstractController
     {
         return $this->render('blog/list.html.twig', ['page' => $page]);
     }
-
+/*
     /**
      * Getting a article with a formatted slug for title
      *
@@ -69,7 +69,7 @@ class BlogController extends AbstractController
      *     defaults={"slug" = null},
      *     name="blog_show")
      * @return Response A response instance
-     */
+
     public
     function show(?string $slug): Response
     {
@@ -102,6 +102,8 @@ class BlogController extends AbstractController
             ]
         );
     }
+*/
+
 
     /**
      *
@@ -115,6 +117,17 @@ class BlogController extends AbstractController
         return $this->render(
             'blog/category.html.twig', ['categoryArticles' => $articles, 'category' => $category]
         );
+    }
+
+
+    /**
+     *
+     * @Route("/tag/{name}", name="show_tag")
+     */
+    public function showByTag(Tag $tag)
+    {
+        $articles = $tag->getArticles();
+        return $this->render('blog/showtag.html.twig', ['articles' => $articles, 'tag' => $tag]);
     }
 }
 
