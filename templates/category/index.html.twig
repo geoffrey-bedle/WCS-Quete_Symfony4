@@ -1,32 +1,37 @@
-{# templates/blog/index.html.twig #}
+{# templates/category/index.html.twig #}
 {% extends 'base.html.twig' %}
 
 {% block title %}All articles{% endblock %}
 
 {% block body %}
-    <h1>All articles from article s table : </h1>
-    {% for article in articles %}
-        <div>
-            <h2>{{ loop.index }} / {{ article.title }} - Category : {{ article.category.name }}</h2>
-            <p>{{ article.content }}</p>
-        </div>
-    {% else %}
-        Aucun article trouvé.
+
+    {% for category in categories %}
+        <h1>All articles from article s table : </h1>
+        {% for article in articles %}
+            <div>
+                <h2>{{ loop.index }} / {{ article.title }} - Category : {{ article.category.name }}</h2>
+                <p>{{ article.content }}</p>
+            </div>
+        {% else %}
+            Aucun article trouvé.
+        {% endfor %}
     {% endfor %}
     <a href="{{ path('app_index') }}">
         Back to homepage.
     </a>
-    <a href="{{ path('blog_show', { 'slug': "javascript-vs-php" }) }}">
-        Testing show() method from BlogController with a real article s slug.
-    </a>
+
+
     <br><br>
     <a href="{{ path('blog_index') }}">
         Testing index() method from BlogController to view all articles.
     </a>
     <br><br>
+    {#
     {% for category in categories %}
-    <a style="color:tomato;" href="{{ path('show_category', {'name': category.name }) }}">Voir les articles {{category.name}}</a><br><br>
-{% endfor %}
+        <a style="color:tomato;" href="{{ path('show_category', {'name': category.name }) }}">Voir les
+            articles {{ category.name }}</a><br><br>
+    {% endfor %}
+    #}
     {{ form_start(form) }}
     {{ form_row(form.searchField) }}
     <button type="submit" name="btnSearch">Rechercher</button>

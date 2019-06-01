@@ -97,7 +97,7 @@ class Article
     {
         if (!$this->tags->contains($tag)) {
             $this->tags[] = $tag;
-            $tag->setArticles($this);
+            $tag->addArticle($this);
         }
 
         return $this;

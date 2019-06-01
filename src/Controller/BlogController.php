@@ -47,7 +47,7 @@ class BlogController extends AbstractController
             throw  $this->createNotFoundException('No article found in article\'s table.');
         }
 
-        return $this->render('blog/index.html.twig', ['articles' => $articles, 'categories' => $categories,
+        return $this->render('category/index.html.twig', ['articles' => $articles, 'categories' => $categories,
             'form' => $form->createView(),
             'categoryform' => $categoryform->createView()]);
     }
@@ -57,52 +57,52 @@ class BlogController extends AbstractController
      */
     public function list($page)
     {
-        return $this->render('blog/list.html.twig', ['page' => $page]);
+        return $this->render('category/list.html.twig', ['page' => $page]);
     }
-/*
-    /**
-     * Getting a article with a formatted slug for title
-     *
-     * @param string $slug The slugger
-     *
-     * @Route("/{slug<^[a-z0-9-]+$>}",
-     *     defaults={"slug" = null},
-     *     name="blog_show")
-     * @return Response A response instance
+    /*
+        /**
+         * Getting a article with a formatted slug for title
+         *
+         * @param string $slug The slugger
+         *
+         * @Route("/{slug<^[a-z0-9-]+$>}",
+         *     defaults={"slug" = null},
+         *     name="blog_show")
+         * @return Response A response instance
 
-    public
-    function show(?string $slug): Response
-    {
-        if (!$slug) {
-            throw $this
-                ->createNotFoundException('No slug has been sent to find an article in article\'s table.');
-        }
+        public
+        function show(?string $slug): Response
+        {
+            if (!$slug) {
+                throw $this
+                    ->createNotFoundException('No slug has been sent to find an article in article\'s table.');
+            }
 
-        $slug = preg_replace(
-            '/-/',
-            ' ', ucwords(trim(strip_tags($slug)), "-")
-        );
+            $slug = preg_replace(
+                '/-/',
+                ' ', ucwords(trim(strip_tags($slug)), "-")
+            );
 
-        $article = $this->getDoctrine()
-            ->getRepository(Article::class)
-            ->findOneBy(['title' => mb_strtolower($slug)]);
+            $article = $this->getDoctrine()
+                ->getRepository(Article::class)
+                ->findOneBy(['title' => mb_strtolower($slug)]);
 
-        if (!$article) {
-            throw $this->createNotFoundException(
-                'No article with ' . $slug . ' title, found in article\'s table.'
+            if (!$article) {
+                throw $this->createNotFoundException(
+                    'No article with ' . $slug . ' title, found in article\'s table.'
+                );
+            }
+            $category = $article->getCategory();
+            return $this->render(
+                'category/show.html.twig',
+                [
+                    'article' => $article,
+                    'slug' => $slug,
+                    'category' => $category
+                ]
             );
         }
-        $category = $article->getCategory();
-        return $this->render(
-            'blog/show.html.twig',
-            [
-                'article' => $article,
-                'slug' => $slug,
-                'category' => $category
-            ]
-        );
-    }
-*/
+    */
 
 
     /**
@@ -115,19 +115,19 @@ class BlogController extends AbstractController
         $articles = $category->getArticles();
 
         return $this->render(
-            'blog/category.html.twig', ['categoryArticles' => $articles, 'category' => $category]
+            'category/category.html.twig', ['categoryArticles' => $articles, 'category' => $category]
         );
     }
 
 
     /**
      *
-     * @Route("/tag/{name}", name="show_tag")
+     * @Route("/tag/show/{name}", name="tag")
      */
     public function showByTag(Tag $tag)
     {
         $articles = $tag->getArticles();
-        return $this->render('blog/showtag.html.twig', ['articles' => $articles, 'tag' => $tag]);
+        return $this->render('category/showtag.html.twig', ['articles' => $articles, 'tag' => $tag]);
     }
 }
 

@@ -32,7 +32,7 @@ $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
             $em->flush();
         }
 
-        return $this->render('blog/addcategory.html.twig', ['form' => $form->createView(),'categories'=>$categories]);
+        return $this->render('category/addcategory.html.twig', ['form' => $form->createView(),'categories'=>$categories]);
     }
 
 }

@@ -7,6 +7,10 @@
 
     <table class="table">
         <tbody>
+        <tr>
+            <th>Category</th>
+            <td>{{ article.category.name }}</td>
+        </tr>
             <tr>
                 <th>Id</th>
                 <td>{{ article.id }}</td>
@@ -21,9 +25,11 @@
             </tr>
             <tr>
                 <th>Tags</th>
+
+
                 <td>
                     {% for tag in article.tags %}
-                        {{ tag.name }}
+                        <a href="{{ path('tag', { 'name': tag.name }) }}"> {{ tag.name }}</a>
                     {% endfor %}
                 </td>
             </tr>
