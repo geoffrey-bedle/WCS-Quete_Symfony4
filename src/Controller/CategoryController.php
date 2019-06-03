@@ -5,6 +5,7 @@ namespace App\Controller;
 
 use App\Entity\Category;
 use App\Form\CategoryType;
+use App\Repository\CategoryRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,12 +14,11 @@ use Symfony\Component\HttpFoundation\Response;
 class CategoryController extends AbstractController
 {
     /**
-     * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/category/add")
      */
     public function add(Request $request): Response
     {
-$categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
+        $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
 
 
         $form = $this->createForm(CategoryType::class);
@@ -32,7 +32,15 @@ $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
             $em->flush();
         }
 
-        return $this->render('category/addcategory.html.twig', ['form' => $form->createView(),'categories'=>$categories]);
+        return $this->render('category/addcategory.html.twig', ['form' => $form->createView(), 'categories' => $categories]);
+    }
+    /**
+     * @Route("/categories", name="categories_show")
+     */
+    public function showCategories(CategoryRepository $categoryRepository):Response
+    {
+        $categories = $categoryRepository->findAll();
+        return $this->render('category/category.html.twig', ['categories' => $categories]);
     }
 
 }

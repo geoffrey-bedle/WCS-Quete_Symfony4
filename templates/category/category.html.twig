@@ -1,32 +1,15 @@
 {% extends 'base.html.twig' %}
 
 {% block content %}
+    {% for category in categories %}
     <div class="jumbotron jumbotron-fluid">
         <div class="container">
             <h1 class="display-4">Catégorie : {{ category.name }}</h1>
         </div>
     </div>
+{% endfor %}
 
-    <table class="table">
-        <thead>
-        <tr>
 
-            <th scope="col">Titre</th>
-            <th scope="col">Contenu</th>
-            <th scope="col">Tag</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for article in categoryArticles %}
-            <tr>
-                <th scope="row">{{ article.title }}</th>
-                <td>{{ article.content }}</td>
-                <td>{% for tag in article.tags %}<a
-                        href="{{ path('tag',{'name':tag.name}) }}">{{ tag.name }}</a>{% endfor %}</td>
 
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
 
 {% endblock %}

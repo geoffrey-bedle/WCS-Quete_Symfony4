@@ -109,7 +109,7 @@ class Article
             $this->tags->removeElement($tag);
             // set the owning side to null (unless already changed)
             if ($tag->getArticles() === $this) {
-                $tag->setArticles(null);
+                $tag->removeArticle($this);
             }
         }
 
