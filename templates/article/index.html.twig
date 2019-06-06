@@ -11,6 +11,7 @@
                 <th>Id</th>
                 <th>Content</th>
                 <th>Title</th>
+                <th>Category</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -22,6 +23,7 @@
                 <td>{{ article.id }}</td>
                 <td>{{ article.content }}</td>
                 <td>{{ article.title }}</td>
+                <td>{{ article.category.name }}</td>
                 <td>
                     <a href="{{ path('article_show', {'id': article.id}) }}">show</a>
                     <a href="{{ path('article_edit', {'id': article.id}) }}">edit</a>

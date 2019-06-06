@@ -35,7 +35,7 @@ class Article
     private $category;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Tag", mappedBy="articles", fetch="EAGER")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Tag", mappedBy="articles")
      */
     private $tags;
 
