@@ -29,7 +29,7 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface
         for ($i = 0; $i < 50; $i++) {
             $article = new Article();
             $article->setTitle(mb_strtolower($faker->sentence));
-            $article->setContent($faker->paragraph);
+            $article->setContent(mb_strtolower($faker->paragraph));
             $manager->persist($article);
             $article->setCategory($this->getReference('categorie_' . ($i + 1) % 5));
         }
