@@ -24,8 +24,8 @@
                 <td>{{ article.id }}</td>
                 <td>{{ article.content }}</td>
                 <td>{{ article.title }}</td>
-                <td>{{ article.slug }}</td>
                 <td>{{ article.category.name }}</td>
+                <td>{{ article.slug }}</td>
                 <td>
                     <a href="{{ path('article_show', {'id': article.id}) }}">show</a>
                     <a href="{{ path('article_edit', {'id': article.id}) }}">edit</a>
