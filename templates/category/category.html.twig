@@ -4,7 +4,7 @@
     {% for category in categories %}
     <div class="jumbotron jumbotron-fluid">
         <div class="container">
-            <h1 class="display-4">Catégorie : {{ category.name }}</h1>
+            <a href="{{ path('category_show',{'id': category.id}) }}"> <h1 class="display-4">Catégorie : {{ category.name }}</h1></a>
         </div>
     </div>
 {% endfor %}

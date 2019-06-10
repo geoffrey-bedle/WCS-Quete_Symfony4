@@ -6,6 +6,7 @@ use App\Service\slugify;
 use App\Entity\Article;
 use App\Form\ArticleType;
 use App\Repository\ArticleRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,18 +20,18 @@ class ArticleController extends AbstractController
     /**
      * @Route("/", name="article_index", methods={"GET"})
      */
-    public function index(ArticleRepository $articleRepository): Response
+    public function index(ArticleRepository $articleRepository, PaginatorInterface $paginator, Request $request): Response
     {
-
-        return $this->render('article/index.html.twig', [
-            'articles' => $articleRepository->findAll(),
-        ]);
+        $articles = $paginator->paginate(
+            $articleRepository->findAll(),
+            $request->query->getInt('page', 1), 7);
+        return $this->render('article/index.html.twig', ['articles' => $articles]);
     }
 
     /**
      * @Route("/new", name="article_new", methods={"GET","POST"})
      */
-    public function new(Request $request, Slugify $slugify): Response
+    public function new(Request $request, Slugify $slugify, \Swift_Mailer $mailer): Response
     {
         $article = new Article();
         $form = $this->createForm(ArticleType::class, $article);
@@ -42,6 +43,18 @@ class ArticleController extends AbstractController
             $article->setSlug($slug);
             $entityManager->persist($article);
             $entityManager->flush();
+
+            $message = (new \Swift_Message('Un nouvel article vient d\'être publié sur ton blog !'))
+                ->setFrom($this->getParameter('mailer_from'))
+                ->setTo($this->getParameter('mailer_from'))
+                ->setBody(
+                    $this->renderView(
+                      'email/article_newsletter.html.twig',
+                        ['article'=>$article]
+                    ),
+                    'text/html'
+                );
+            $mailer->send($message);
 
             return $this->redirectToRoute('article_index');
         }

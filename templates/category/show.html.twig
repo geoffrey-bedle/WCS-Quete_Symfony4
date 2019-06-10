@@ -4,15 +4,33 @@
 
 {% block content %}
 
-    <div>
-        <h1>Real article s title : {{ article.title }}</h1>
-        <h2>Category : {{ category.name }}</h2>
-        <p>{{ article.content }}</p>
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4">{{ category.name }}</h1>
+            <p class="lead">That's all articles in reference with {{ category.name }}'s category</p>
+        </div>
     </div>
 
+
+
+
+
+
+    {% for article in category.articles %}
+        {{ article.title }}<br><br>
+    {% else %}
+        <div class="container">
+            <div class="alert alert-primary" role="alert">
+                Nothing to display ! come back later ...
+            </div>
+        </div>
+    {% endfor %}
     <a href="{{ path('app_index') }}">
-        Back to homepage.
+        <button type="button" class="btn btn-primary">Back to homepage</button>
     </a>
 
+    <a href="{{ path('categories_show') }}">
+        <button type="button" class="btn btn-primary">Back to categories</button>
+    </a>
 {% endblock %}
 
