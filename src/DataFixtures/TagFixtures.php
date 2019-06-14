@@ -17,7 +17,6 @@ class TagFixtures extends Fixture
             $tag = new Tag();
             $tag->setName($faker->word);
             $manager->persist($tag);
-
         }
         $manager->flush();
 

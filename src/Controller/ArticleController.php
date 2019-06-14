@@ -23,7 +23,7 @@ class ArticleController extends AbstractController
     public function index(ArticleRepository $articleRepository, PaginatorInterface $paginator, Request $request): Response
     {
         $articles = $paginator->paginate(
-            $articleRepository->findAll(),
+            $articleRepository->findAllWithCategories(),
             $request->query->getInt('page', 1), 7);
         return $this->render('article/index.html.twig', ['articles' => $articles]);
     }
@@ -36,21 +36,22 @@ class ArticleController extends AbstractController
         $article = new Article();
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
-
+        $user = $this->getUser();
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $slug = $slugify->generate($article->getTitle());
             $article->setSlug($slug);
+            $article->setAuthor($user);
             $entityManager->persist($article);
             $entityManager->flush();
 
-            $message = (new \Swift_Message('Un nouvel article vient d\'être publié sur ton blog !'))
+            $message = (new \Swift_Message('n nouvel article vient d\'être publié sur ton blog !'))
                 ->setFrom($this->getParameter('mailer_from'))
                 ->setTo($this->getParameter('mailer_from'))
                 ->setBody(
                     $this->renderView(
-                      'email/article_newsletter.html.twig',
-                        ['article'=>$article]
+                        'email/article_newsletter.html.twig',
+                        ['article' => $article]
                     ),
                     'text/html'
                 );

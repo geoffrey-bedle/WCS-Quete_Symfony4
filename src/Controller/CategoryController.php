@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 class CategoryController extends AbstractController
 {
     /**
-     * @Route("/category/add")
+     * @Route("/category/add", name="category_add")
      */
     public function add(Request $request): Response
     {
