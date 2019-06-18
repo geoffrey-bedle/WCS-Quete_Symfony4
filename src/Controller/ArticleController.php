@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Service\slugify;
 use App\Entity\Article;
 use App\Form\ArticleType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use App\Repository\ArticleRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,13 +24,14 @@ class ArticleController extends AbstractController
     public function index(ArticleRepository $articleRepository, PaginatorInterface $paginator, Request $request): Response
     {
         $articles = $paginator->paginate(
-            $articleRepository->findAllWithCategories(),
+            $articleRepository->findAll(),
             $request->query->getInt('page', 1), 7);
         return $this->render('article/index.html.twig', ['articles' => $articles]);
     }
 
     /**
      * @Route("/new", name="article_new", methods={"GET","POST"})
+     * @IsGranted("ROLE_AUTHOR")
      */
     public function new(Request $request, Slugify $slugify, \Swift_Mailer $mailer): Response
     {
@@ -57,7 +59,7 @@ class ArticleController extends AbstractController
                 );
             $mailer->send($message);
 
-            return $this->redirectToRoute('article_index');
+            return $this->redirectToRoute('app_index');
         }
 
         return $this->render('article/new.html.twig', [
@@ -78,6 +80,7 @@ class ArticleController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="article_edit", methods={"GET","POST"})
+     * @IsGranted("ROLE_AUTHOR")
      */
     public function edit(Request $request, Article $article, slugify $slugify): Response
     {

@@ -1,8 +1,21 @@
 {% extends 'base.html.twig' %}
 {% block content %}
-
     <img src="{{ asset("build/couleur.jpg") }}" class="color-line" alt="couleur">
     <h1 class="default-title">Bienvenue sur mon blog {{ app.user.firstname ?? '' }} !</h1>
+
+<div class="five-last-articles">
+    <h2>Last article's</h2>
+    {% for article in lastArticles %}
+        <div class="card" style="width: 18rem;">
+            <img src="..." class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">{{ article.id }} : {{ article.title }}</h5>
+                <p class="card-text">{{ article.content }}</p>
+            </div>
+        </div>
+    {% endfor %}
+</div>
 {% endblock %}
+
 
 

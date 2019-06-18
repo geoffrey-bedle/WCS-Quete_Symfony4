@@ -3,6 +3,7 @@
 
 namespace App\Controller;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use App\Entity\Category;
 use App\Form\CategoryType;
 use App\Repository\CategoryRepository;
@@ -15,11 +16,11 @@ class CategoryController extends AbstractController
 {
     /**
      * @Route("/category/add", name="category_add")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function add(Request $request): Response
     {
         $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
-
 
         $form = $this->createForm(CategoryType::class);
         $form->handleRequest($request);
@@ -32,7 +33,9 @@ class CategoryController extends AbstractController
             $em->flush();
         }
 
-        return $this->render('category/addcategory.html.twig', ['form' => $form->createView(), 'categories' => $categories]);
+        return $this->render('category/addcategory.html.twig',
+            ['form' => $form->createView(),
+                'categories' => $categories]);
     }
 
     /**

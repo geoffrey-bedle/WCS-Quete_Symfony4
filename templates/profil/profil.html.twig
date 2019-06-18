@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <div class="container">
+
+    <div class="profil">
+        <h1>Mon tableau de bord</h1>
+    </div>
+        <h3>Profil : {{ app.user.firstname }} {{ app.user.lastname }}</h3>
+    <br>
+    <br>
+        <h3>Mes articles:</h3>
+    <br>
+    <br>
+
+
+
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">Title</th>
+            <th scope="col">content</th>
+            <th scope="col">Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for article in app.user.articles %}
+        <tr>
+            <th scope="row">{{ article.title }}</th>
+            <td>{{ article.content }}</td>
+            <td>Otto</td>
+        </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+
+
+
+
+    </div>
+{% endblock %}

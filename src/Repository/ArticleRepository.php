@@ -22,10 +22,20 @@ class ArticleRepository extends ServiceEntityRepository
     public function findAllWithCategories()
     {
         $qb = $this->createQueryBuilder('a')
-            ->innerJoin('a.category', 'c' )
+            ->innerJoin('a.category', 'c')
             ->addSelect('c')
             ->getQuery();
 
+        return $qb->execute();
+    }
+
+
+    public function fiveLastArticles()
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->orderBy('a.id', 'DESC')
+            ->setMaxResults(5)
+            ->getQuery();
         return $qb->execute();
     }
     // /**

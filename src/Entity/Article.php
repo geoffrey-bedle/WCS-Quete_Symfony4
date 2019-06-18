@@ -49,9 +49,18 @@ class Article
      */
     private $author;
 
+    /**
+     * @ORM\Column(type="datetime", options={"default":"2019-06-17"})
+     */
+    private $createdAt;
+
+
+
     public function __construct()
     {
         $this->tags = new ArrayCollection();
+
+        $this->createdAt = new \DateTime();
     }
 
     public function getId(): ?int
@@ -146,6 +155,18 @@ class Article
     public function setAuthor(?User $author): self
     {
         $this->author = $author;
+
+        return $this;
+    }
+
+    public function getCreatedat(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedat(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }
