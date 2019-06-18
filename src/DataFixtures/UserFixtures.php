@@ -18,17 +18,20 @@ class UserFixtures extends Fixture
      }
     public function load(ObjectManager $manager)
     {
+
+
+
         $author = new User();
-        $author->setEmail('author@monsite.com');
-        $author->setFirstname('emilie');
-        $author->setLastname('bronchain');
+        $author->setEmail('author1@monsite.com');
+        $author->setFirstname('Camille');
+        $author->setLastname('Durand');
         $author->setRoles(['ROLE_AUTHOR']);
         $author->setPassword($this->passwordEncoder->encodePassword(
             $author,
             'authorpassword'
         ));
         $manager->persist($author);
-
+/*
         // Création d’un utilisateur de type “administrateur”
         $admin = new User();
         $admin->setFirstname('geoffrey');
@@ -41,7 +44,7 @@ class UserFixtures extends Fixture
         ));
 
         $manager->persist($admin);
-
+*/
 
         $manager->flush();
     }

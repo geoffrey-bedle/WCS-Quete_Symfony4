@@ -7,7 +7,7 @@ use App\Entity\Article;
 use App\Form\ArticleType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use App\Repository\ArticleRepository;
-use Knp\Component\Pager\PaginatorInterface;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,11 +21,11 @@ class ArticleController extends AbstractController
     /**
      * @Route("/", name="article_index", methods={"GET"})
      */
-    public function index(ArticleRepository $articleRepository, PaginatorInterface $paginator, Request $request): Response
+    public function index(ArticleRepository $articleRepository, Request $request): Response
     {
-        $articles = $paginator->paginate(
-            $articleRepository->findAll(),
-            $request->query->getInt('page', 1), 7);
+            $articles = $articleRepository->findAll();
+         //   dd($articles);
+
         return $this->render('article/index.html.twig', ['articles' => $articles]);
     }
 
