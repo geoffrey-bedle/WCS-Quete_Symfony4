@@ -34,11 +34,6 @@ class BlogController extends AbstractController
             $category);
 
 
-        $form = $this->createForm(
-            ArticleSearchType::class,
-            null,
-            ['method' => Request::METHOD_GET]
-        );
 
 
         $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
@@ -48,7 +43,7 @@ class BlogController extends AbstractController
         }
 
         return $this->render('category/index.html.twig', ['articles' => $articles, 'categories' => $categories,
-            'form' => $form->createView(),
+
             'categoryform' => $categoryform->createView()]);
     }
 

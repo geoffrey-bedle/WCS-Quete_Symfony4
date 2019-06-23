@@ -15,6 +15,7 @@ console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
 
 
 const $ = require('jquery');
+require ('./app.js');
 // this "modifies" the jquery module: adding behavior to it
 // the bootstrap module doesn't export/return anything
 require('bootstrap');

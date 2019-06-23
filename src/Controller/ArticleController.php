@@ -23,8 +23,8 @@ class ArticleController extends AbstractController
      */
     public function index(ArticleRepository $articleRepository, Request $request): Response
     {
-            $articles = $articleRepository->findAll();
-         //   dd($articles);
+        $articles = $articleRepository->findAll();
+        //   dd($articles);
 
         return $this->render('article/index.html.twig', ['articles' => $articles]);
     }
@@ -84,23 +84,29 @@ class ArticleController extends AbstractController
      */
     public function edit(Request $request, Article $article, slugify $slugify): Response
     {
-        $form = $this->createForm(ArticleType::class, $article);
-        $form->handleRequest($request);
+        if ($this->getUser() === $article->getAuthor() || in_array('ROLE_ADMIN',$this->getUser()->getRoles())) {
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $article->setSlug($slugify->generate($article->getTitle()));
-            $this->getDoctrine()->getManager()->flush();
+            $form = $this->createForm(ArticleType::class, $article);
+            $form->handleRequest($request);
 
-            return $this->redirectToRoute('article_index', [
-                'id' => $article->getId(),
+            if ($form->isSubmitted() && $form->isValid()) {
+                $article->setSlug($slugify->generate($article->getTitle()));
+                $this->getDoctrine()->getManager()->flush();
+
+                return $this->redirectToRoute('article_index', [
+                    'id' => $article->getId(),
+                ]);
+            }
+
+            return $this->render('article/edit.html.twig', [
+                'article' => $article,
+                'form' => $form->createView(),
             ]);
+        } else {
+            return $this->redirectToRoute('app_index');
         }
-
-        return $this->render('article/edit.html.twig', [
-            'article' => $article,
-            'form' => $form->createView(),
-        ]);
     }
+
 
     /**
      * @Route("/{id}", name="article_delete", methods={"DELETE"})

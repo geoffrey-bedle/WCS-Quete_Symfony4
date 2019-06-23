@@ -15,7 +15,7 @@
                 <th>Content</th>
                 <th>Title</th>
                 <th>Category</th>
-                <th>Slug</th>
+                <th>Tags</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -28,10 +28,14 @@
                 <td>{{ article.content }}</td>
                 <td>{{ article.title }}</td>
                 <td>{{ article.category.name }}</td>
-                <td>{{ article.slug }}</td>
+                <td>
+                    {% for tag in article.tags %}
+                    {{ tag.name }}
+                    {% endfor %}
+                </td>
                 <td>
                     <a href="{{ path('article_show', {'id': article.id}) }}">show</a>
-                    {% if is_granted('ROLE_AUTHOR') %}
+                    {% if is_granted('ROLE_AUTHOR') and app.user.id == (article.author.id ?? '') or is_granted('ROLE_ADMIN') %}
                     <a href="{{ path('article_edit', {'id': article.id}) }}">edit</a>
                     {% endif %}
                 </td>

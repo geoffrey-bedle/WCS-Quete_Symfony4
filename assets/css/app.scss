@@ -22,7 +22,17 @@ body {
   display: flex;
   justify-content: space-evenly;
   margin-top: 100px;
+  margin-bottom: 100px;
+  a{
+    color:white;
+  }
+  .tag-link a{
+    color:blue;
+  }
 }
+
+
+
 /*-------------------------------------PROFIL-----------------------------------------*/
 /*------------------------------------------------------------------------------------*/
 .profil h1{

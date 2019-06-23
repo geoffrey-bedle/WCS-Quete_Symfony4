@@ -5,7 +5,9 @@
 <h1>Ajouter une catégorie</h1>
 
     {{ form_start(form) }}
-    {{ form_row(form.name) }}
+{{ form_help(form,{help:'Hello les amis'}) }}
+    {{ form_widget(form) }}
+    {{ form_errors(form) }}
     <button class="btn">{{ button_label|default('Save') }}</button>
     {{ form_end(form) }}
     <ul>

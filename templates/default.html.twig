@@ -7,11 +7,25 @@
     <h2>Last article's</h2>
     {% for article in lastArticles %}
         <div class="card" style="width: 18rem;">
-            <img src="..." class="card-img-top" alt="...">
+            <img src="https://picsum.photos/200/200" class="card-img-top" alt="image-aleatoire">
             <div class="card-body">
-                <h5 class="card-title">{{ article.id }} : {{ article.title }}</h5>
+                <h5 class="card-title">{{ article.title }}</h5>
                 <p class="card-text">{{ article.content }}</p>
+                <p>{{ article.author.firstname }}</p>
+                <p>{{ article.createdAt.date }}</p>
+                <p>article's id : {{ article.id }}</p>
+<div class="tag-link">
+                {% for tag in article.tags %}
+
+               <a class="tag-link" href="{{ path('tag',{'name': tag.name}) }}">#{{ tag.name }}</a>
+                {% endfor %}
+</div>
+
             </div>
+             <a href="{{ path('article_show', {'id': article.id}) }}"><button class="btn btn-dark "> show</button></a>
+            {% if is_granted('ROLE_AUTHOR') and app.user.id == (article.author.id) or is_granted('ROLE_ADMIN') %}
+                 <a  href="{{ path('article_edit', {'id': article.id}) }}"><button class="btn btn-dark "> edit</button></a>
+            {% endif %}
         </div>
     {% endfor %}
 </div>
