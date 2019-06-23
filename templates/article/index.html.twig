@@ -28,11 +28,13 @@
                 <td>{{ article.content }}</td>
                 <td>{{ article.title }}</td>
                 <td>{{ article.category.name }}</td>
+
                 <td>
                     {% for tag in article.tags %}
                     {{ tag.name }}
                     {% endfor %}
                 </td>
+
                 <td>
                     <a href="{{ path('article_show', {'id': article.id}) }}">show</a>
                     {% if is_granted('ROLE_AUTHOR') and app.user.id == (article.author.id ?? '') or is_granted('ROLE_ADMIN') %}

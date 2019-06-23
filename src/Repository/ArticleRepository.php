@@ -29,6 +29,14 @@ class ArticleRepository extends ServiceEntityRepository
         return $qb->execute();
     }
 
+    public function findAllWithCategoriesAndTags()
+    {
+        $em = $this->getEntityManager();
+        $query = $em->createQuery('SELECT a, c, t FROM App\Entity\Article a LEFT JOIN a.category c LEFT JOIN a.tags t');
+
+        return $query->execute();
+    }
+
 
     public function fiveLastArticles()
     {

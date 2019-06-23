@@ -28,7 +28,7 @@ public function __construct(Slugify $slugify)
 
     public function load(ObjectManager $manager)
     {
-        for ($i = 0; $i = 0; $i++) {
+        for ($i = 0; $i<=1000; $i++) {
             $category = new Category();
             $category->setName("category " . $i);
             $manager->persist($category);
@@ -48,7 +48,7 @@ public function __construct(Slugify $slugify)
 
         $manager->flush();
 
-        $manager->flush();
+
     }
 
 
