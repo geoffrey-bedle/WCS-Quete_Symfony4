@@ -15,6 +15,7 @@
                     Tags
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="{{ path('add_tag') }}">Add new tag</a>
                     {% for tag in tags %}
                         <a class="dropdown-item" href="{{ path('tag',{'name':tag.name}) }}">{{ tag.name }}</a>
                     {% endfor %}
@@ -26,7 +27,7 @@
                     Categories
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="{{ path('category_add') }}">Add category</a>
+                    <a class="dropdown-item" href="{{ path('category_add') }}">Add new category</a>
                     <a class="dropdown-item" href="{{ path('categories_show') }}">All</a>
                     {% for category in categories %}
                         <a class="dropdown-item"

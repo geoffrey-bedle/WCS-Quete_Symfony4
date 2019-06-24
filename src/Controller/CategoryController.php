@@ -31,6 +31,7 @@ class CategoryController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->persist($data);
             $em->flush();
+            $this->addFlash('success','Category has been add');
         }
 
         return $this->render('category/addcategory.html.twig',

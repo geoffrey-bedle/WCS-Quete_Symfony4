@@ -3,6 +3,7 @@
     <img src="{{ asset("build/couleur.jpg") }}" class="color-line" alt="couleur">
     <h1 class="default-title">Bienvenue sur mon blog {{ app.user.firstname ?? '' }} !</h1>
 
+
 <div class="five-last-articles">
     <h2>Last article's</h2>
     {% for article in lastArticles %}

@@ -7,7 +7,6 @@ use App\Entity\Article;
 use App\Form\ArticleType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use App\Repository\ArticleRepository;
-
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,6 +28,7 @@ class ArticleController extends AbstractController
         return $this->render('article/index.html.twig', ['articles' => $articles]);
     }
 
+
     /**
      * @Route("/new", name="article_new", methods={"GET","POST"})
      * @IsGranted("ROLE_AUTHOR")
@@ -38,7 +38,9 @@ class ArticleController extends AbstractController
         $article = new Article();
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
+
         $user = $this->getUser();
+
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $slug = $slugify->generate($article->getTitle());
@@ -58,6 +60,8 @@ class ArticleController extends AbstractController
                     'text/html'
                 );
             $mailer->send($message);
+
+            $this->addFlash('secondary', 'The new article has been created');
 
             return $this->redirectToRoute('app_index');
         }
@@ -84,7 +88,7 @@ class ArticleController extends AbstractController
      */
     public function edit(Request $request, Article $article, slugify $slugify): Response
     {
-        if ($this->getUser() === $article->getAuthor() || in_array('ROLE_ADMIN',$this->getUser()->getRoles())) {
+        if ($this->getUser() === $article->getAuthor() || in_array('ROLE_ADMIN', $this->getUser()->getRoles())) {
 
             $form = $this->createForm(ArticleType::class, $article);
             $form->handleRequest($request);
@@ -92,6 +96,8 @@ class ArticleController extends AbstractController
             if ($form->isSubmitted() && $form->isValid()) {
                 $article->setSlug($slugify->generate($article->getTitle()));
                 $this->getDoctrine()->getManager()->flush();
+
+                $this->addFlash('success','Article has been modified succesfully');
 
                 return $this->redirectToRoute('article_index', [
                     'id' => $article->getId(),
@@ -117,6 +123,7 @@ class ArticleController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($article);
             $entityManager->flush();
+            $this->addFlash('danger','Votre article a bien été supprimé ');
         }
 
         return $this->redirectToRoute('article_index');
