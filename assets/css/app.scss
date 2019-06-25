@@ -35,6 +35,18 @@ body {
   margin-top: 150px;
 }
 
+.favorite{
+  display:flex;
+}
+
+#favorite{
+  width:30px;
+}
+
+.fav:hover{
+  cursor: pointer;
+}
+
 
 
 /*-------------------------------------PROFIL-----------------------------------------*/

@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Service\slugify;
 use App\Entity\Article;
 use App\Form\ArticleType;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use App\Repository\ArticleRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -79,6 +81,7 @@ class ArticleController extends AbstractController
     {
         return $this->render('article/show.html.twig', [
             'article' => $article,
+            'isFavorite'=>$this->getUser()->isFavorite($article)
         ]);
     }
 
@@ -93,11 +96,11 @@ class ArticleController extends AbstractController
             $form = $this->createForm(ArticleType::class, $article);
             $form->handleRequest($request);
 
-            if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->isSubmitted() && $form->isValid() ) {
                 $article->setSlug($slugify->generate($article->getTitle()));
                 $this->getDoctrine()->getManager()->flush();
 
-                $this->addFlash('success','Article has been modified succesfully');
+                $this->addFlash('success', 'Article has been modified succesfully');
 
                 return $this->redirectToRoute('article_index', [
                     'id' => $article->getId(),
@@ -123,9 +126,28 @@ class ArticleController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($article);
             $entityManager->flush();
-            $this->addFlash('danger','Votre article a bien été supprimé ');
+            $this->addFlash('danger', 'Votre article a bien été supprimé ');
         }
 
         return $this->redirectToRoute('article_index');
     }
+
+    /**
+     * @Route("/{id}/favorite",name="article_favorite")
+     */
+    public function favorite(Request $request, Article $article, EntityManagerInterface $entityManager) :Response
+    {
+        if ($this->getUser()->getFavorite()->contains($article)) {
+            $this->getUser()->removeFavorite($article)   ;
+        }
+        else {
+            $this->getUser()->addFavorite($article);
+        }
+        $entityManager->flush();
+        return $this->json([
+            'isFavorite' => $this->getUser()->isFavorite($article)
+        ]);
+    }
+
+
 }

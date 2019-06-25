@@ -26,6 +26,7 @@ class DefaultController extends AbstractController
      */
     public function index(ArticleRepository $articleRepository)
     {
+      //  dd($this->getUser());
         $lastArticles = $articleRepository->fiveLastArticles();
         return $this->render('default.html.twig', ['lastArticles' => $lastArticles]);
     }

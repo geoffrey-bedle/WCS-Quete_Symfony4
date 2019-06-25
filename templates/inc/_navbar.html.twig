@@ -38,11 +38,13 @@
         </ul>
     </div>
     {% if app.user.email is not defined %}
-    <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">
-        Connexion
-    </button>
-{% endif %}
-    {%  if app.user.email is defined  %}
-        <a href="{{ path('app_logout') }}"> <button type="button" class="btn btn-dark" >Se deconnecter</button></a>
+        <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">
+            Connexion
+        </button>
+    {% endif %}
+    {% if app.user.email is defined %}
+        <a href="{{ path('app_logout') }}">
+            <button type="button" class="btn btn-dark">Se deconnecter</button>
+        </a>
     {% endif %}
 </nav>

@@ -3,12 +3,12 @@
     <img src="{{ asset("build/couleur.jpg") }}" class="color-line" alt="couleur">
     <h1 class="default-title">Bienvenue sur mon blog {{ app.user.firstname ?? '' }} !</h1>
 
-
+    <h2 style="margin-top: 80px;">Last article's :</h2>
 <div class="five-last-articles">
-    <h2>Last article's</h2>
+
     {% for article in lastArticles %}
         <div class="card" style="width: 18rem;">
-            <img src="https://picsum.photos/200/200" class="card-img-top" alt="image-aleatoire">
+            <img src="http://lorempixel.com/200/200" class="card-img-top" alt="image-aleatoire">
             <div class="card-body">
                 <h5 class="card-title">{{ article.title }}</h5>
                 <p class="card-text">{{ article.content }}</p>
@@ -17,7 +17,6 @@
                 <p>article's id : {{ article.id }}</p>
 <div class="tag-link">
                 {% for tag in article.tags %}
-
                <a class="tag-link" href="{{ path('tag',{'name': tag.name}) }}">#{{ tag.name }}</a>
                 {% endfor %}
 </div>
@@ -29,6 +28,22 @@
             {% endif %}
         </div>
     {% endfor %}
+</div>
+    {% if app.user %}
+    <h2>My favorite articles :</h2><br>
+<div class="favorite">
+
+    {% for favorite in app.user.favorite %}
+        <div class="card " style="width: 18rem;">
+            <img src="http://lorempixel.com/200/200" class="card-img-top" alt="Une image au hazard">
+            <div class="card-body">
+
+                <h5 class="card-title">{{ favorite.title }}</h5>
+                <p class="card-text">{{ favorite.content }}</p>
+            </div>
+        </div>
+    {% endfor %}
+    {% endif %}
 </div>
 {% endblock %}
 
