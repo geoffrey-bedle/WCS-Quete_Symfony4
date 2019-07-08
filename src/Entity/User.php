@@ -51,14 +51,17 @@ class User implements UserInterface
     private $articles;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Article")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Article", inversedBy="users")
      */
     private $favorite;
+
+
 
     public function __construct()
     {
         $this->articles = new ArrayCollection();
-        $this->favoris = new ArrayCollection();
+        $this->favorite = new ArrayCollection();
+
     }
 
     public function getId(): ?int
@@ -194,6 +197,17 @@ class User implements UserInterface
         return $this;
     }
 
+
+    public function isFavorite(Article $article)
+    {
+        $isFavorite = false;
+        if ($this->favorite->contains($article)) {
+            $isFavorite = true;
+        }
+        return $isFavorite;
+
+    }
+
     /**
      * @return Collection|Article[]
      */
@@ -218,15 +232,5 @@ class User implements UserInterface
         }
 
         return $this;
-    }
-
-    public function isFavorite(Article $article)
-    {
-        $isFavorite = false;
-        if ($this->favorite->contains($article)) {
-            $isFavorite = true;
-        }
-        return $isFavorite;
-
     }
 }

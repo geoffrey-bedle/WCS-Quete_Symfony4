@@ -15,7 +15,12 @@ use Symfony\Component\HttpFoundation\Response;
 class CategoryController extends AbstractController
 {
     /**
-     * @Route("/category/add", name="category_add")
+     * @Route({
+     *     "en" : "/category/new",
+     *     "fr" : "/categorie/ajout",
+     *     "es" : "/categoria/crear",
+     *      },
+     *     name="category_add")
      * @IsGranted("ROLE_ADMIN")
      */
     public function add(Request $request): Response
@@ -31,7 +36,7 @@ class CategoryController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->persist($data);
             $em->flush();
-            $this->addFlash('success','Category has been add');
+            $this->addFlash('success', 'Category has been add');
         }
 
         return $this->render('category/addcategory.html.twig',

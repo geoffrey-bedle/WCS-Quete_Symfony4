@@ -15,10 +15,16 @@ console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
 
 
 const $ = require('jquery');
-require ('./app.js');
+
+// require ('./test.js')
 // this "modifies" the jquery module: adding behavior to it
 // the bootstrap module doesn't export/return anything
 require('bootstrap');
+require('@fortawesome/fontawesome-free/css/all.min.css');
+require('@fortawesome/fontawesome-free/js/all.js');
+
+
+require('./favorite.js');
 
 // or you can include specific pieces
 // require('bootstrap/js/dist/tooltip');

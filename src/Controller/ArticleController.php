@@ -25,9 +25,13 @@ class ArticleController extends AbstractController
     public function index(ArticleRepository $articleRepository, Request $request): Response
     {
         $articles = $articleRepository->findAllWithCategoriesAndTags();
-        //   dd($articles);
 
-        return $this->render('article/index.html.twig', ['articles' => $articles]);
+
+        return $this->render('article/index.html.twig',
+            [
+                'articles' => $articles
+            ]
+        );
     }
 
 
@@ -68,10 +72,12 @@ class ArticleController extends AbstractController
             return $this->redirectToRoute('app_index');
         }
 
-        return $this->render('article/new.html.twig', [
-            'article' => $article,
-            'form' => $form->createView(),
-        ]);
+        return $this->render('article/new.html.twig',
+            [
+                'article' => $article,
+                'form' => $form->createView(),
+            ]
+        );
     }
 
     /**
@@ -79,9 +85,10 @@ class ArticleController extends AbstractController
      */
     public function show(Article $article): Response
     {
+
         return $this->render('article/show.html.twig', [
             'article' => $article,
-            'isFavorite'=>$this->getUser()->isFavorite($article)
+            'isFavorite' => $this->getUser()->isFavorite($article)
         ]);
     }
 
@@ -96,7 +103,7 @@ class ArticleController extends AbstractController
             $form = $this->createForm(ArticleType::class, $article);
             $form->handleRequest($request);
 
-            if ($form->isSubmitted() && $form->isValid() ) {
+            if ($form->isSubmitted() && $form->isValid()) {
                 $article->setSlug($slugify->generate($article->getTitle()));
                 $this->getDoctrine()->getManager()->flush();
 
@@ -107,10 +114,12 @@ class ArticleController extends AbstractController
                 ]);
             }
 
-            return $this->render('article/edit.html.twig', [
-                'article' => $article,
-                'form' => $form->createView(),
-            ]);
+            return $this->render('article/edit.html.twig',
+                [
+                    'article' => $article,
+                    'form' => $form->createView(),
+                ]
+            );
         } else {
             return $this->redirectToRoute('app_index');
         }
@@ -135,19 +144,20 @@ class ArticleController extends AbstractController
     /**
      * @Route("/{id}/favorite",name="article_favorite")
      */
-    public function favorite(Request $request, Article $article, EntityManagerInterface $entityManager) :Response
+    public function favorite(Request $request, Article $article, EntityManagerInterface $entityManager): Response
     {
         if ($this->getUser()->getFavorite()->contains($article)) {
-            $this->getUser()->removeFavorite($article)   ;
-        }
-        else {
+            $this->getUser()->removeFavorite($article);
+        } else {
             $this->getUser()->addFavorite($article);
         }
         $entityManager->flush();
-        return $this->json([
-            'isFavorite' => $this->getUser()->isFavorite($article)
-        ]);
-    }
 
+        return $this->json(
+            [
+                'isFavorite' => $this->getUser()->isFavorite($article)
+            ]
+        );
+    }
 
 }

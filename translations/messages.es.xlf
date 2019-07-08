@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="fr" target-language="es" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="CDjx2ju" resname="hello_username">
+        <source>hello_username</source>
+        <target>Buenos dias %username%</target>
+      </trans-unit>
+      <trans-unit id="4qzKjzc" resname="account.">
+        <source>account.</source>
+        <target>__account.</target>
+      </trans-unit>
+      <trans-unit id="Q7UTU9q" resname="account.logout">
+        <source>account.logout</source>
+        <target>desconexión</target>
+      </trans-unit>
+      <trans-unit id="E_t5j6Q" resname="account.login">
+        <source>account.login</source>
+        <target>conexión</target>
+      </trans-unit>
+      <trans-unit id="h90aOD9" resname="menu.article">
+        <source>menu.article</source>
+        <target>Bienes</target>
+      </trans-unit>
+      <trans-unit id="xvRnmr2" resname="menu.tag">
+        <source>menu.tag</source>
+        <target>Etiquetas</target>
+      </trans-unit>
+      <trans-unit id="_Yx.7An" resname="menu.categorie">
+        <source>menu.categorie</source>
+        <target>Categorias</target>
+      </trans-unit>
+      <trans-unit id="bhQz2.I" resname="menu.laguage">
+        <source>menu.laguage</source>
+        <target>Lengua</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

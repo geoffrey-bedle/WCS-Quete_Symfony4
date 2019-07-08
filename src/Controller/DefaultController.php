@@ -20,17 +20,19 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class DefaultController extends AbstractController
 {
 
-
     /**
      * @Route("/",name="app_index")
      */
     public function index(ArticleRepository $articleRepository)
     {
-      //  dd($this->getUser());
         $lastArticles = $articleRepository->fiveLastArticles();
-        return $this->render('default.html.twig', ['lastArticles' => $lastArticles]);
-    }
 
+        return $this->render('default.html.twig',
+            [
+                'lastArticles' => $lastArticles
+            ]
+        );
+    }
 
     public function navbarLink(TagRepository $tagRepository, CategoryRepository $categoryRepository)
     {
@@ -39,7 +41,6 @@ class DefaultController extends AbstractController
 
         return $this->render('inc/_navbar.html.twig', ['tags' => $tags, 'categories' => $categories]);
     }
-
 
     /**
      * @Route("/add/tag",name="add_tag")
@@ -66,6 +67,5 @@ class DefaultController extends AbstractController
                 'tags' => $tags
             ]);
     }
-
 
 }

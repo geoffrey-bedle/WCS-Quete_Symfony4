@@ -3,11 +3,15 @@
 {% block title %}Article index{% endblock %}
 
 {% block body %}
+
     <h1>{{ app.session.get('total') }}</h1>
+
     <h1>Article index</h1>
     {% if app.user.email is defined %}
         <a href="{{ path('article_new') }}"><button class="btn btn-dark">Create new</button></a>
     {% endif %}
+
+
     <table class="table">
         <thead>
             <tr>

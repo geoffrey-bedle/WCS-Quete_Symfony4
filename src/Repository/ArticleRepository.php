@@ -46,6 +46,17 @@ class ArticleRepository extends ServiceEntityRepository
             ->getQuery();
         return $qb->execute();
     }
+
+    public function fiveLastArticlesWithCategoryAndTag()
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->leftJoin('a.category','c')
+            ->leftJoin('a.tags','t')
+            ->orderBy('a.id', 'DESC')
+            ->setMaxResults(5)
+            ->getQuery();
+        return $qb->execute();
+    }
     // /**
     //  * @return Article[] Returns an array of Article objects
     //  */

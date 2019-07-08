@@ -5,36 +5,35 @@
 {% block body %}
     <h1>Article</h1>
 
-    <a class="fav" onclick="addToFavorite()">{{ isFavorite ? '<i id="favorite" class="fas fa-heart"></i>' : '<i id="favorite" class="far fa-heart"></i>' }}</a>
-
+    <a class="fav"
+       onclick="addToFavorite()">{{ isFavorite ? '<i id="favorite" class="fas fa-heart"></i>' : '<i id="favorite" class="far fa-heart"></i>' }}</a>
+{{ dump(isFavorite) }}
     <table class="table">
         <tbody>
         <tr>
             <th>Category</th>
             <td>{{ article.category.name }}</td>
         </tr>
-            <tr>
-                <th>Id</th>
-                <td>{{ article.id }}</td>
-            </tr>
-            <tr>
-                <th>Content</th>
-                <td>{{ article.content }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ article.title }}</td>
-            </tr>
-            <tr>
-                <th>Tags</th>
-
-
-                <td>
-                    {% for tag in article.tags %}
-                        <a href="{{ path('tag', { 'name': tag.name }) }}"> {{ tag.name }}</a>
-                    {% endfor %}
-                </td>
-            </tr>
+        <tr>
+            <th>Id</th>
+            <td>{{ article.id }}</td>
+        </tr>
+        <tr>
+            <th>Content</th>
+            <td>{{ article.content }}</td>
+        </tr>
+        <tr>
+            <th>Title</th>
+            <td>{{ article.title }}</td>
+        </tr>
+        <tr>
+            <th>Tags</th>
+            <td>
+                {% for tag in article.tags %}
+                    <a href="{{ path('tag', { 'name': tag.name }) }}"> {{ tag.name }}</a>
+                {% endfor %}
+            </td>
+        </tr>
         </tbody>
     </table>
 
@@ -45,6 +44,7 @@
     {{ include('article/_delete_form.html.twig') }}
 
     <script>
+
         function addToFavorite() {
             fetch('{{ path('article_favorite', {'id': article.id}) }}')
                 .then(response => response.json())
@@ -53,13 +53,17 @@
                     if (json.isFavorite) {
                         favoriteElt.classList.remove('far');
                         favoriteElt.classList.add('fas');
-                    }
-                    else {
+                        alert('votre article a bien été ajouté aux favoris !')
+                    } else {
+
                         favoriteElt.classList.remove('fas');
                         favoriteElt.classList.add('far');
+                        alert('votre article a bien été retiré des favoris !')
                     }
+
                 });
         }
+
     </script>
 
 {% endblock %}
